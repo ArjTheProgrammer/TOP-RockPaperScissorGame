@@ -9,12 +9,19 @@ function getComputerChoice(){
 function getHumanChoice(){
     let humanChoice = prompt("Pick [rock, paper, scissor]: ");
     humanChoice = humanChoice.toLowerCase();
-        
-    if (!choices.includes(humanChoice)){
-        console.log("enter valid pick");
-        return new getHumanChoice();
+    
+    if (!isValid(humanChoice, choices)){
+        console.log(`${humanChoice} is not a valid pick`);
+        return;
     }
+
     return humanChoice;
 }
 
-console.log(getHumanChoice());
+function isValid(humanChoice, choices){
+    for (let choice of choices){
+        if (humanChoice == choice) {
+            return true;
+        }
+    }
+}
