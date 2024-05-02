@@ -1,4 +1,4 @@
-let choices = ["Rock", "Paper", "Scissor"];
+let choices = ["rock", "paper", "scissor"];
 
 function getComputerChoice(){
     let computerIndex = Math.floor(Math.random() * choices.length);
@@ -6,4 +6,15 @@ function getComputerChoice(){
    return choices[computerIndex];
 }
 
-console.log(getComputerChoice());
+function getHumanChoice(){
+    let humanChoice = prompt("Pick [rock, paper, scissor]: ");
+    humanChoice = humanChoice.toLowerCase();
+        
+    if (!choices.includes(humanChoice)){
+        console.log("enter valid pick");
+        return new getHumanChoice();
+    }
+    return humanChoice;
+}
+
+console.log(getHumanChoice());
