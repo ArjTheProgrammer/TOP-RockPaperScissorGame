@@ -2,68 +2,28 @@ let choices = ["rock", "paper", "scissor"];
 let humanScore = 0;
 let computerScore = 0;
 
+const prompt = document.querySelector(".prompt");
+
+const displayHumanScore = document.querySelector(".user-score");
+const displayCompScore = document.querySelector(".bot-score");
+
 /* this the function that plays a round*/
 function playRound(humanChoice, computerChoice) {
-    if (!isValid(humanChoice, choices)){
-        console.log(`${humanChoice} is not a valid pick`);
-        return;
-    }
-
     if (humanChoice == "rock" && computerChoice == "scissor" ||
         humanChoice == "paper" && computerChoice == "rock" ||
         humanChoice == "scissor" && computerChoice == "paper"
     ) {
         ++humanScore;
-        console.log(`
-        Your score: ${humanScore}
-        Computer score: ${computerScore}
-
-        your choice: ${humanChoice}
-        computer choice: ${computerChoice}
-        You win! ${humanChoice} beats ${computerChoice}
-        `);
+        prompt.textContent = `${humanChoice} beats ${computerChoice}, You win!`;
+        displayHumanScore.textContent = `Score: ${humanScore}`;
     }
     else if (humanChoice == computerChoice) {
-        console.log("Tied!")
-        return;
+        prompt.textContent = `Tie`;
     }
     else {
         ++computerScore;
-        console.log(`
-        Your score: ${humanScore}
-        Computer score: ${computerScore}
-
-        your choice: ${humanChoice}
-        computer choice: ${computerChoice}
-        You lose! ${computerChoice} beats ${humanChoice}`);
-    }
-}
-
-/* this the where the game is played*/
-
-function playGame() {
-
-    while (humanScore != 5 && computerScore != 5){
-        const humanSelection = getHumanChoice();
-        const computerSelection = getComputerChoice();
-    
-            playRound(humanSelection, computerSelection);
-    }
-
-    if (humanScore > computerScore) {
-        console.log (`
-        Congratulation! You win!
-        `)
-    }
-    else if (humanScore < computerScore){
-        console.log (`
-        Sorry, you lose!
-        `)
-    }
-    else {
-        console.log (`
-        intense! tied game!
-        `)
+        prompt.textContent = `${humanChoice} lose to ${computerChoice}, You lost!`
+        displayCompScore.textContent = `Score: ${computerScore}`;
     }
 }
 
@@ -75,21 +35,18 @@ function getComputerChoice(){
    return choices[computerIndex];
 }
 
-/* this the function that gets the human choice*/
-function getHumanChoice(){
-    let humanChoice = prompt("Pick [rock, paper, scissor]: ");
-    humanChoice = humanChoice.toLowerCase();
+const rock = document.querySelector(".rock");
+const paper = document.querySelector(".paper");
+const scissor = document.querySelector(".scissor");
 
-    return humanChoice;
-}
+rock.addEventListener("click", () => {
+    playRound("rock", getComputerChoice());
+});
 
-/* this the function that checks if the answer of the user is valid*/
-function isValid(humanChoice, choices){
-    for (let choice of choices){
-        if (humanChoice == choice) {
-            return true;
-        }
-    }
-}
+paper.addEventListener("click", () => {
+    playRound("paper", getComputerChoice());
+});
 
-playGame();
+scissor.addEventListener("click", () => {
+    playRound("scissor", getComputerChoice());
+});
